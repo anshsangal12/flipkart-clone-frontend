@@ -9,36 +9,38 @@ function OrderSummary() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Retrieve the address passed from Checkout.js
   const shippingAddress = location.state?.shippingAddress;
 
   useEffect(() => {
-    // Security check: If they somehow got here without entering an address, send them back
     if (!shippingAddress) {
-      toast.error("Please enter a delivery address first.");
       navigate('/checkout');
-      return;
+    } else {
+      axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/cart')
+        .then(res => setCartItems(res.data))
+        .catch(err => console.error("Error fetching cart", err));
     }
-
-    // Fetch the cart items to show the final bill
-    axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/cart')
-      .then(res => setCartItems(res.data))
-      .catch(err => console.error("Error fetching cart for summary", err));
   }, [navigate, shippingAddress]);
+
+  if (!shippingAddress) return null;
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const placeOrder = () => {
-    // Generate a fake order ID for the confirmation page
     const orderId = "OD" + Math.floor(Math.random() * 10000000000);
-    
-    // In a real app, you would POST to /api/orders here and clear the cart.
-    // For now, we just show success and navigate to the confirmation page!
     toast.success('Order Placed Successfully!');
     navigate(`/order-confirmation/${orderId}`);
   };
 
-  if (cartItems.length === 0) return <div className="loading">Loading Order Details...</div>;
+  // CRITICAL FIX: Safe image parser to prevent the White Screen of Death
+  const getSafeImage = (images) => {
+    if (Array.isArray(images) && images.length > 0) return images[0];
+    if (typeof images === 'string') {
+      return images.replace(/[{}"']/g, '').split(',')[0];
+    }
+    return 'https://placehold.co/400x400/png?text=No+Image';
+  };
+
+  if (cartItems.length === 0) return <div className="loading" style={{textAlign: 'center', marginTop: '50px'}}>Loading Order Details...</div>;
 
   return (
     <div className="summary-page">
@@ -55,7 +57,11 @@ function OrderSummary() {
             <h3>2. Order Summary</h3>
             {cartItems.map(item => (
               <div key={item.id} className="summary-item">
-                <img src={item.images[0]} alt={item.name} onError={e => e.target.src='/images/placeholder.png'} />
+                <img 
+                  src={getSafeImage(item.images)} 
+                  alt={item.name} 
+                  onError={e => e.target.src='https://placehold.co/400x400/png?text=No+Image'} 
+                />
                 <div className="summary-item-info">
                   <p className="item-name">{item.name}</p>
                   <p className="item-qty">Quantity: {item.quantity}</p>
@@ -76,7 +82,7 @@ function OrderSummary() {
             </div>
             <div className="price-row">
               <span>Delivery Charges</span>
-              <span className="free">Free</span>
+              <span style={{color: '#388e3c', fontWeight: '500'}}>Free</span>
             </div>
             <hr />
             <div className="price-row final-total">
