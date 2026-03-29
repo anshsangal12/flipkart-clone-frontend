@@ -158,3 +158,15 @@
     font-size: 12px;
   }
 }
+
+.product-price {
+  display: flex;
+  flex-wrap: wrap; /* 🚨 Moves price to next line if it doesn't fit */
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.price { font-weight: bold; color: #212121; }
+.original-price { color: #878787; text-decoration: line-through; font-size: 12px; }
+.discount { color: #388e3c; font-weight: 500; font-size: 12px; }

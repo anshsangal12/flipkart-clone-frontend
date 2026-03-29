@@ -1,128 +1,82 @@
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background-color: #2874f0;
-  padding: 10px 5%;
   color: white;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column; /* 🚨 Stacks rows by default */
+  gap: 10px;
   position: sticky;
   top: 0;
   z-index: 1000;
-  gap: 10px;
 }
 
-.navbar-left {
-  flex-shrink: 0;
+/* TOP ROW: Logo and Buttons */
+.nav-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .navbar-logo {
   text-decoration: none;
   color: white;
+}
+
+.logo-text { font-size: 18px; font-weight: bold; font-style: italic; }
+.logo-sub { font-size: 10px; font-style: italic; color: #ffe500; }
+
+.navbar-right {
   display: flex;
-  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
 
-.logo-text {
-  font-size: 20px;
-  font-weight: bold;
-  font-style: italic;
-  line-height: 1;
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.logo-sub {
-  font-size: 11px;
-  font-style: italic;
-}
-
-.plus {
-  color: #ffe500;
-  font-weight: bold;
-}
-
-/* --- THE SEARCH BAR FIX --- */
+/* BOTTOM ROW: Search Bar */
 .navbar-search {
-  flex: 1;
-  max-width: 600px;
+  width: 100%;
   display: flex;
   background: white;
   border-radius: 2px;
-  overflow: hidden;
   height: 36px;
+  overflow: hidden;
 }
 
 .navbar-search input {
   flex: 1;
   border: none;
-  padding: 0 15px;
+  padding: 0 12px;
   outline: none;
-  font-size: 14px;
 }
 
 .navbar-search button {
   background: white;
   border: none;
-  padding: 0 10px;
-  cursor: pointer;
+  padding-right: 10px;
   color: #2874f0;
 }
 
-/* --- THE ICONS FIX --- */
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-shrink: 0;
-}
-
-.cart-link {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  position: relative;
-}
-
-.cart-badge {
-  background: #ff6161;
-  color: white;
-  font-size: 10px;
-  padding: 2px 5px;
-  border-radius: 50%;
-  position: absolute;
-  top: -8px;
-  right: -10px;
-}
-
-/* ============================================================
-   📱 MOBILE RESPONSIVE NAV (Fixes your screenshot issue)
-   ============================================================ */
-@media (max-width: 768px) {
+/* 🖥️ DESKTOP UPGRADE (Moves search back to center) */
+@media (min-width: 768px) {
   .navbar {
-    flex-wrap: wrap; /* Allows items to wrap to a second line */
-    padding: 10px;
-  }
-
-  .navbar-left {
-    order: 1; /* Logo stays top-left */
-  }
-
-  .navbar-right {
-    order: 2; /* Cart/Wishlist stays top-right */
-    gap: 15px;
-  }
-
-  .navbar-search {
-    order: 3; /* Search bar moves to a NEW line at the bottom */
-    width: 100%;
-    max-width: 100%;
-    flex: unset;
-    margin-top: 5px;
+    flex-direction: row; /* 🚨 Side-by-side on desktop */
+    height: 56px;
+    padding: 0 10%;
+    justify-content: space-between;
   }
   
-  .logo-sub {
-    display: none; /* Hide 'Explore Plus' on small screens to save space */
+  .navbar-search {
+    max-width: 500px;
+    margin: 0 20px;
   }
 }
