@@ -1,81 +1,128 @@
 .navbar {
-  background-color: #2874f0;
-  padding: 12px 20px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  background-color: #2874f0;
+  padding: 10px 5%;
+  color: white;
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 1000;
+  gap: 10px;
+}
+
+.navbar-left {
+  flex-shrink: 0;
 }
 
 .navbar-logo {
+  text-decoration: none;
+  color: white;
   display: flex;
   flex-direction: column;
-  color: white;
-  min-width: 100px;
 }
 
 .logo-text {
   font-size: 20px;
   font-weight: bold;
   font-style: italic;
+  line-height: 1;
 }
 
 .logo-sub {
   font-size: 11px;
-  color: #ffe500;
+  font-style: italic;
 }
 
 .plus {
   color: #ffe500;
-  font-style: italic;
+  font-weight: bold;
 }
 
+/* --- THE SEARCH BAR FIX --- */
 .navbar-search {
   flex: 1;
-  display: flex;
   max-width: 600px;
+  display: flex;
+  background: white;
+  border-radius: 2px;
+  overflow: hidden;
+  height: 36px;
 }
 
 .navbar-search input {
   flex: 1;
-  padding: 10px 16px;
   border: none;
-  border-radius: 2px 0 0 2px;
-  font-size: 14px;
+  padding: 0 15px;
   outline: none;
+  font-size: 14px;
 }
 
 .navbar-search button {
-  padding: 10px 16px;
   background: white;
   border: none;
-  border-radius: 0 2px 2px 0;
+  padding: 0 10px;
   cursor: pointer;
-  font-size: 16px;
+  color: #2874f0;
 }
 
+/* --- THE ICONS FIX --- */
 .navbar-right {
-  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
 }
 
 .cart-link {
   color: white;
-  font-size: 15px;
-  font-weight: 500;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
   position: relative;
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 2px;
 }
 
 .cart-badge {
   background: #ff6161;
   color: white;
+  font-size: 10px;
+  padding: 2px 5px;
   border-radius: 50%;
-  padding: 1px 6px;
-  font-size: 11px;
-  margin-left: 4px;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+}
+
+/* ============================================================
+   📱 MOBILE RESPONSIVE NAV (Fixes your screenshot issue)
+   ============================================================ */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap; /* Allows items to wrap to a second line */
+    padding: 10px;
+  }
+
+  .navbar-left {
+    order: 1; /* Logo stays top-left */
+  }
+
+  .navbar-right {
+    order: 2; /* Cart/Wishlist stays top-right */
+    gap: 15px;
+  }
+
+  .navbar-search {
+    order: 3; /* Search bar moves to a NEW line at the bottom */
+    width: 100%;
+    max-width: 100%;
+    flex: unset;
+    margin-top: 5px;
+  }
+  
+  .logo-sub {
+    display: none; /* Hide 'Explore Plus' on small screens to save space */
+  }
 }
