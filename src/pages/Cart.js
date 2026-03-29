@@ -15,6 +15,10 @@ function Cart() {
 
   useEffect(() => { fetchCart(); }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // This forces the page to start at the very top!
+  }, []);
+
   const updateQty = (id, quantity) => {
     if (quantity < 1) {
       removeItem(id);
