@@ -34,15 +34,20 @@ function ProductDetail() {
 
   if (!product) return <div className="loading">Loading...</div>;
 
-  // Safety check to ensure images are always a valid array
-  let images = ['https://placehold.co/400x400/png?text=No+Image'];
+  // --- BUG FIX: Strict filtering for empty or broken image URLs ---
+  let images = [];
   if (Array.isArray(product.images) && product.images.length > 0) {
-    images = product.images;
+    images = product.images.filter(img => img && img.trim().length > 10);
   } else if (typeof product.images === 'string') {
     try {
       const cleanString = product.images.replace(/^{|}$/g, '').replace(/^"|"$/g, '');
-      images = cleanString.split('","');
+      images = cleanString.split('","').filter(img => img && img.trim().length > 10);
     } catch(e) {}
+  }
+
+  // Safety fallback if the database gives us totally empty data
+  if (images.length === 0) {
+    images = ['https://placehold.co/400x400/png?text=No+Image'];
   }
 
   // Carousel Functions
