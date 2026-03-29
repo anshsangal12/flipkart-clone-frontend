@@ -34,18 +34,25 @@ function ProductDetail() {
 
   if (!product) return <div className="loading">Loading...</div>;
 
-  // --- BUG FIX: Strict filtering for empty or broken image URLs ---
+  // --- BULLETPROOF IMAGE PARSING ---
   let images = [];
-  if (Array.isArray(product.images) && product.images.length > 0) {
+  
+  if (Array.isArray(product.images)) {
+    // If it's already a clean array
     images = product.images.filter(img => img && img.trim().length > 10);
   } else if (typeof product.images === 'string') {
+    // If PostgreSQL sent it as a raw string format like '{"url1","url2"}'
     try {
-      const cleanString = product.images.replace(/^{|}$/g, '').replace(/^"|"$/g, '');
-      images = cleanString.split('","').filter(img => img && img.trim().length > 10);
-    } catch(e) {}
+      let cleanString = product.images.replace(/^{/, '').replace(/}$/, '');
+      let rawArray = cleanString.split(',');
+      images = rawArray.map(img => img.replace(/^"/, '').replace(/"$/, '').trim())
+                       .filter(img => img.length > 10);
+    } catch(e) {
+      console.error("Image parsing failed", e);
+    }
   }
 
-  // Safety fallback if the database gives us totally empty data
+  // Safety fallback if database sends empty images
   if (images.length === 0) {
     images = ['https://placehold.co/400x400/png?text=No+Image'];
   }
