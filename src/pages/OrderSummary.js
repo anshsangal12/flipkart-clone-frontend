@@ -35,9 +35,26 @@ function OrderSummary() {
   }, 0);
 
   const placeOrder = () => {
-    const orderId = "OD" + Math.floor(Math.random() * 10000000000);
-    toast.success('Order Placed Successfully!');
-    navigate(`/order-confirmation/${orderId}`);
+    // 1. Tell backend to empty the cart
+    axios.delete('https://flipkart-clone-backend-sm1d.onrender.com/api/cart/clear')
+      .then(() => {
+        // 2. Reset the cart bubble in the navbar to 0
+        window.dispatchEvent(new Event('cartUpdated')); 
+        
+        // 3. Go to confirmation page
+        const orderId = "OD" + Math.floor(Math.random() * 10000000000);
+        toast.success('Order Placed Successfully!');
+        navigate(`/order-confirmation/${orderId}`);
+      })
+      .catch(err => {
+        // If it fails, we will see it in the console!
+        console.error("Failed to clear cart", err);
+        toast.error("Order placed, but failed to clear cart.");
+        
+        // Still send them to confirmation so they don't get stuck
+        const orderId = "OD" + Math.floor(Math.random() * 10000000000);
+        navigate(`/order-confirmation/${orderId}`);
+      });
   };
 
   // Safely grab the first image
