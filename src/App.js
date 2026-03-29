@@ -9,7 +9,6 @@ import ProductList from './pages/ProductList';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
-// You imported it correctly here!
 import OrderSummary from './pages/OrderSummary';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Wishlist from './pages/Wishlist';
@@ -17,24 +16,27 @@ import Wishlist from './pages/Wishlist';
 function App() {
   return (
     <Router>
-      <Navbar />
-      <ToastContainer position="top-right" autoClose={2000} />
-      
-      <div className="main-content">
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          
-          <Route path="/order-summary" element={<OrderSummary />} /> 
-          
-          <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-        </Routes>
-      </div>
+      <div className="app-container">
 
-      <Footer />
+        <Navbar />
+
+        <ToastContainer position="top-right" autoClose={2000} />
+
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<ProductList />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-summary" element={<OrderSummary />} /> 
+            <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+          </Routes>
+        </div>
+
+        <Footer />
+
+      </div>
     </Router>
   );
 }
