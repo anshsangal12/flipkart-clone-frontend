@@ -213,3 +213,23 @@ hr {
   line-height: 1.5;
   font-size: 14px;
 }
+
+.btn-wishlist {
+  padding: 18px 30px;
+  background-color: #fff;
+  color: #878787;
+  border: 1px solid #e0e0e0;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px; /* Pushes it below the other buttons on mobile */
+  margin-left: 10px; /* Spaces it from Buy Now on desktop */
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+  transition: box-shadow 0.2s;
+}
+
+.btn-wishlist:hover {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.3);
+  color: #ff4343; /* Gives the text a nice red tint on hover! */
+}

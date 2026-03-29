@@ -24,6 +24,12 @@ function ProductDetail() {
       });
   };
 
+  const addToWishlist = () => {
+    axios.post('https://flipkart-clone-backend-sm1d.onrender.com/api/wishlist', { product_id: product.id })
+      .then(() => toast.success('Added to Wishlist! ❤️'))
+      .catch(() => toast.error('Failed to add to Wishlist'));
+  };
+
   const buyNow = () => {
     axios.post('https://flipkart-clone-backend-sm1d.onrender.com/api/cart', { product_id: product.id })
       .then(() => {
@@ -38,10 +44,8 @@ function ProductDetail() {
   let images = [];
   
   if (Array.isArray(product.images)) {
-    // If it's already a clean array
     images = product.images.filter(img => img && img.trim().length > 10);
   } else if (typeof product.images === 'string') {
-    // If PostgreSQL sent it as a raw string format like '{"url1","url2"}'
     try {
       let cleanString = product.images.replace(/^{/, '').replace(/}$/, '');
       let rawArray = cleanString.split(',');
@@ -52,19 +56,13 @@ function ProductDetail() {
     }
   }
 
-  // Safety fallback if database sends empty images
   if (images.length === 0) {
     images = ['https://placehold.co/400x400/png?text=No+Image'];
   }
 
   // Carousel Functions
-  const nextImg = () => {
-    setSelectedImg((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImg = () => {
-    setSelectedImg((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  const nextImg = () => setSelectedImg((prev) => (prev + 1) % images.length);
+  const prevImg = () => setSelectedImg((prev) => (prev === 0 ? images.length - 1 : prev - 1));
 
   const discount = Math.round((1 - product.price / product.original_price) * 100);
 
@@ -108,6 +106,8 @@ function ProductDetail() {
           <div className="detail-actions">
             <button className="btn-cart" onClick={addToCart}>🛒 Add to Cart</button>
             <button className="btn-buy" onClick={buyNow}>⚡ Buy Now</button>
+            {/* WISHLIST BUTTON PLACED CORRECTLY HERE */}
+            <button className="btn-wishlist" onClick={addToWishlist}>❤️ WISHLIST</button>
           </div>
         </div>
 

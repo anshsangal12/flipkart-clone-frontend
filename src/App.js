@@ -12,6 +12,7 @@ import Checkout from './pages/Checkout';
 // You imported it correctly here!
 import OrderSummary from './pages/OrderSummary';
 import OrderConfirmation from './pages/OrderConfirmation';
+import Wishlist from './pages/Wishlist';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/order-summary" element={<OrderSummary />} /> 
           
           <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
       </div>
 
