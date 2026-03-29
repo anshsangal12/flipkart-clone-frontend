@@ -3,14 +3,14 @@
   color: white;
   padding: 10px 15px;
   display: flex;
-  flex-direction: column; /* 🚨 Stacks rows by default */
-  gap: 10px;
+  flex-direction: column; /* Row stacking for mobile */
+  gap: 8px;
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
 }
 
-/* TOP ROW: Logo and Buttons */
 .nav-top-row {
   display: flex;
   justify-content: space-between;
@@ -21,14 +21,16 @@
 .navbar-logo {
   text-decoration: none;
   color: white;
+  line-height: 1;
 }
 
 .logo-text { font-size: 18px; font-weight: bold; font-style: italic; }
-.logo-sub { font-size: 10px; font-style: italic; color: #ffe500; }
+.logo-sub { font-size: 10px; font-style: italic; }
+.plus { color: #ffe500; font-weight: bold; }
 
 .navbar-right {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
 }
 
@@ -37,12 +39,21 @@
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  position: relative;
 }
 
-/* BOTTOM ROW: Search Bar */
+.cart-badge {
+  background-color: #ff6161;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  border: 1px solid #2874f0;
+}
+
 .navbar-search {
   width: 100%;
   display: flex;
@@ -57,6 +68,7 @@
   border: none;
   padding: 0 12px;
   outline: none;
+  font-size: 14px;
 }
 
 .navbar-search button {
@@ -64,81 +76,32 @@
   border: none;
   padding-right: 10px;
   color: #2874f0;
+  cursor: pointer;
 }
 
-/* 🖥️ DESKTOP UPGRADE (Moves search back to center) */
+/* ============================================================
+   🖥️ DESKTOP UPGRADE (768px and wider)
+   ============================================================ */
 @media (min-width: 768px) {
   .navbar {
-    flex-direction: row; /* 🚨 Side-by-side on desktop */
+    flex-direction: row; /* Everything on one line */
     height: 56px;
-    padding: 0 10%;
-    justify-content: space-between;
+    padding: 0 10%; /* Centers content on desktop */
+    justify-content: center;
+    gap: 30px;
   }
-  
+
+  .nav-top-row {
+    width: auto;
+    gap: 30px;
+  }
+
   .navbar-search {
     max-width: 500px;
-    margin: 0 20px;
+    margin: 0;
   }
-}
 
-.navbar {
-  background-color: #2874f0;
-  padding: 10px 15px;
-  display: flex;
-  flex-direction: column; /* Stack rows by default for mobile */
-  gap: 10px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-}
-
-.nav-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.navbar-right {
-  display: flex;
-  gap: 15px;
-}
-
-.nav-link {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.navbar-search {
-  width: 100%;
-  display: flex;
-  background: white;
-  border-radius: 2px;
-  height: 36px;
-  overflow: hidden;
-}
-
-.navbar-search input {
-  flex: 1;
-  border: none;
-  padding: 0 12px;
-  outline: none;
-}
-
-/* 🖥️ Desktop: Move search bar back to the center row */
-@media (min-width: 768px) {
-  .navbar {
-    flex-direction: row;
-    padding: 0 10%;
-    height: 56px;
-    align-items: center;
-  }
-  .nav-top-row { width: auto; }
-  .navbar-search {
-    max-width: 600px;
-    margin: 0 30px;
+  .navbar-right {
+    margin-left: 10px;
   }
 }

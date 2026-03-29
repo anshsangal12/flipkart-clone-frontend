@@ -27,31 +27,34 @@ function Navbar() {
     navigate(`/?search=${search}`);
   };
 
- return (
-  <nav className="navbar">
-    <div className="nav-top-row">
-      <Link to="/" className="navbar-logo">
-        <span className="logo-text">Flipkart</span>
-        <div className="logo-sub">Explore Plus</div>
-      </Link>
-      
-      <div className="navbar-right">
-        <Link to="/wishlist" className="nav-link">❤️ Wishlist</Link>
-        <Link to="/cart" className="nav-link">🛒 Cart</Link>
+  return (
+    <nav className="navbar">
+      <div className="nav-top-row">
+        <Link to="/" className="navbar-logo">
+          <span className="logo-text">Flipkart</span>
+          <div className="logo-sub">Explore <span className="plus">Plus</span></div>
+        </Link>
+        
+        <div className="navbar-right">
+          <Link to="/wishlist" className="nav-link">❤️ Wishlist</Link>
+          <Link to="/cart" className="nav-link cart-icon-wrapper">
+            🛒 Cart
+            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+          </Link>
+        </div>
       </div>
-    </div>
 
-    <form className="navbar-search" onSubmit={handleSearch}>
-      <input
-        type="text"
-        placeholder="Search for products, brands and more"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-      />
-      <button type="submit">🔍</button>
-    </form>
-  </nav>
-);
+      <form className="navbar-search" onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search for products, brands and more"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <button type="submit">🔍</button>
+      </form>
+    </nav>
+  );
 }
 
 export default Navbar;

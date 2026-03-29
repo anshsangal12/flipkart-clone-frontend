@@ -1,28 +1,27 @@
+/* Reset all elements to prevent hidden gaps */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: Roboto, Arial, sans-serif;
   background-color: #f1f3f6;
   width: 100%;
-  overflow-x: hidden; /* 🚨 This kills the zoom-out/sideways-scroll bug! */
+  overflow-x: hidden; /* Prevents the horizontal wobble on mobile */
+  -webkit-font-smoothing: antialiased;
 }
 
-/* This is the secret to a professional desktop look */
 .main-content {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-height: 80vh;
 }
 
-/* Every page should use this container to stay consistent */
+/* Use this wrapper on your pages (Cart, Wishlist, etc.) to keep them centered */
 .page-container {
   width: 100%;
-  max-width: 1300px; /* Limits width on huge screens so it's readable */
+  max-width: 1248px; 
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 10px;
 }
