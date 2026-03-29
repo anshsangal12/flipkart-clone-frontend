@@ -254,3 +254,15 @@ hr {
   stroke: #ff4343;
   fill: #ff4343;
 }
+
+/* Update your existing circle button styles */
+.btn-wishlist-circle.active .heart-icon {
+  fill: #ff4343;
+  stroke: #ff4343;
+}
+
+/* Optional: Slight animation when clicking */
+.btn-wishlist-circle:active {
+  transform: scale(0.8);
+  transition: transform 0.1s;
+}

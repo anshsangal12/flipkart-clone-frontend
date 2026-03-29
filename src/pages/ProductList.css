@@ -6,23 +6,25 @@
   box-sizing: border-box;
 }
 
-/* --- CATEGORY BAR (Swipeable Fix) --- */
+/* --- CATEGORY BAR (CENTERED) --- */
 .category-bar {
   display: flex;
-  justify-content: flex-start; 
+  justify-content: center; /* 🔥 CENTERED */
+  align-items: center;
   gap: 20px;
   background: white;
   padding: 12px 15px;
   margin: -16px -16px 16px -16px; 
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+
   overflow-x: auto; 
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Hides scrollbar on Firefox */
+  scrollbar-width: none;
 }
 
 .category-bar::-webkit-scrollbar {
-  display: none; /* Hides scrollbar on Chrome/Safari */
+  display: none;
 }
 
 .cat-btn {
@@ -33,7 +35,7 @@
   color: #212121;
   cursor: pointer;
   padding-bottom: 4px;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .cat-btn.active {
@@ -41,11 +43,11 @@
   border-bottom: 2px solid #2874f0;
 }
 
-/* --- THE ELASTIC PRODUCT GRID --- */
+/* --- PRODUCT GRID --- */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 8px; /* Tighter gap like real Flipkart mobile */
+  gap: 10px;
   padding: 8px 0;
   width: 100%;
 }
@@ -59,7 +61,7 @@
   transition: box-shadow 0.2s;
   cursor: pointer;
   text-decoration: none;
-  border: 1px solid #f0f0f0; /* Subtle border for definition */
+  border: 1px solid #f0f0f0;
 }
 
 .product-card:hover {
@@ -80,12 +82,12 @@
   object-fit: contain;
 }
 
-/* --- TYPOGRAPHY FIXES --- */
+/* --- TEXT --- */
 .product-name {
   font-size: 14px;
   color: #212121;
   margin-bottom: 4px;
-  height: 36px; /* Ensures name takes up 2 lines precisely */
+  height: 36px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -106,12 +108,13 @@
   font-weight: 400;
 }
 
-/* --- 🚨 PRICE FIX (The most important part!) --- */
+/* --- PRICE --- */
 .product-price {
   display: flex;
-  align-items: baseline; /* Aligns currency symbols perfectly */
-  gap: 6px; 
-  flex-wrap: wrap; /* Prevents overlap by moving original price to next line if needed */
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
 }
 
 .price {
@@ -132,13 +135,10 @@
   font-weight: 600;
 }
 
-/* =========================================
-   📱 RESPONSIVE ADJUSTMENTS
-   ========================================= */
-
+/* --- RESPONSIVE (UNCHANGED) --- */
 @media (max-width: 768px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .product-img-wrap {
@@ -152,47 +152,9 @@
 
 @media (max-width: 380px) {
   .price {
-    font-size: 14px; /* Shorter text for very tiny phones */
+    font-size: 14px;
   }
   .product-name {
     font-size: 12px;
-  }
-}
-
-.product-price {
-  display: flex;
-  flex-wrap: wrap; /* 🚨 Moves price to next line if it doesn't fit */
-  align-items: center;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.price { font-weight: bold; color: #212121; }
-.original-price { color: #878787; text-decoration: line-through; font-size: 12px; }
-.discount { color: #388e3c; font-weight: 500; font-size: 12px; }
-
-.product-list-page {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-.product-grid {
-  display: grid;
-  /* Auto-fill creates as many cards as possible based on screen width */
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 10px;
-  width: 100%;
-}
-
-/* iPhone XR / Small Screen Fix */
-@media (max-width: 600px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr); /* Exactly 2 per row on phones */
-    gap: 5px;
-  }
-  .product-card {
-    padding: 10px;
   }
 }
