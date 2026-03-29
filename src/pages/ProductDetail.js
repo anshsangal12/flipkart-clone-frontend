@@ -12,14 +12,14 @@ function ProductDetail() {
 
   useEffect(() => {
     axios.get(`https://flipkart-clone-backend-sm1d.onrender.com/api/products/${id}`)
-      .then(res => setProduct(res.data));
+      .then(res => setProduct(res.data))
+      .catch(err => console.error(err));
   }, [id]);
 
   const addToCart = () => {
     axios.post('https://flipkart-clone-backend-sm1d.onrender.com/api/cart', { product_id: product.id })
       .then(() => {
         toast.success('Added to cart!');
-        // Broadcast signal to Navbar
         window.dispatchEvent(new Event('cartUpdated')); 
       });
   };
@@ -27,13 +27,32 @@ function ProductDetail() {
   const buyNow = () => {
     axios.post('https://flipkart-clone-backend-sm1d.onrender.com/api/cart', { product_id: product.id })
       .then(() => {
-        // Broadcast signal to Navbar
         window.dispatchEvent(new Event('cartUpdated')); 
         navigate('/cart');
       });
   };
 
   if (!product) return <div className="loading">Loading...</div>;
+
+  // Safety check to ensure images are always a valid array
+  let images = ['https://placehold.co/400x400/png?text=No+Image'];
+  if (Array.isArray(product.images) && product.images.length > 0) {
+    images = product.images;
+  } else if (typeof product.images === 'string') {
+    try {
+      const cleanString = product.images.replace(/^{|}$/g, '').replace(/^"|"$/g, '');
+      images = cleanString.split('","');
+    } catch(e) {}
+  }
+
+  // Carousel Functions
+  const nextImg = () => {
+    setSelectedImg((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImg = () => {
+    setSelectedImg((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
 
   const discount = Math.round((1 - product.price / product.original_price) * 100);
 
@@ -42,17 +61,38 @@ function ProductDetail() {
       <div className="detail-container">
 
         <div className="detail-left">
-          <div className="main-img">
-            <img src={product.images[selectedImg]} alt={product.name}
-              onError={e => e.target.src='https://via.placeholder.com/400'} />
+          {/* CAROUSEL MAIN IMAGE */}
+          <div className="main-img-container">
+            {images.length > 1 && (
+              <button className="carousel-btn left" onClick={prevImg}>&#10094;</button>
+            )}
+            
+            <img 
+              src={images[selectedImg]} 
+              alt={product.name}
+              className="main-carousel-img"
+              onError={e => e.target.src='https://placehold.co/400x400/png?text=Image+Blocked'} 
+            />
+            
+            {images.length > 1 && (
+              <button className="carousel-btn right" onClick={nextImg}>&#10095;</button>
+            )}
           </div>
+
+          {/* CAROUSEL THUMBNAILS */}
           <div className="img-thumbnails">
-            {product.images.map((img, i) => (
-              <img key={i} src={img} alt="" className={selectedImg === i ? 'active' : ''}
+            {images.map((img, i) => (
+              <img 
+                key={i} 
+                src={img} 
+                alt={`Thumbnail ${i + 1}`} 
+                className={selectedImg === i ? 'active-thumb' : 'thumb'}
                 onClick={() => setSelectedImg(i)}
-                onError={e => e.target.src='https://via.placeholder.com/60'} />
+                onError={e => e.target.src='https://placehold.co/60x60/png?text=Err'} 
+              />
             ))}
           </div>
+
           <div className="detail-actions">
             <button className="btn-cart" onClick={addToCart}>🛒 Add to Cart</button>
             <button className="btn-buy" onClick={buyNow}>⚡ Buy Now</button>
@@ -62,13 +102,17 @@ function ProductDetail() {
         <div className="detail-right">
           <h1 className="detail-name">{product.name}</h1>
           <div className="detail-rating">
-            ⭐ {product.rating} <span>{product.review_count.toLocaleString()} ratings</span>
+            ⭐ {Number(product.rating || 0).toFixed(1)} <span>{(product.review_count || 0).toLocaleString()} ratings</span>
           </div>
           <hr />
           <div className="detail-price">
             <span className="detail-current-price">₹{Number(product.price).toLocaleString()}</span>
-            <span className="detail-original-price">₹{Number(product.original_price).toLocaleString()}</span>
-            <span className="detail-discount">{discount}% off</span>
+            {product.original_price && (
+              <>
+                <span className="detail-original-price">₹{Number(product.original_price).toLocaleString()}</span>
+                <span className="detail-discount">{discount}% off</span>
+              </>
+            )}
           </div>
           <hr />
           <div className="detail-specs">
