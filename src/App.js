@@ -4,7 +4,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './components/Navbar';
-import Footer from './components/footer';
+// FIX: Capital 'F' for the component name and the file path
+import Footer from './components/Footer'; 
 import ProductList from './pages/ProductList';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -17,7 +18,6 @@ function App() {
       <Navbar />
       <ToastContainer position="top-right" autoClose={2000} />
       
-      {/* 2. Wrap your Routes in a main container (optional, but good for styling if needed) */}
       <div className="main-content">
         <Routes>
           <Route path="/" element={<ProductList />} />
@@ -28,7 +28,7 @@ function App() {
         </Routes>
       </div>
 
-      <Footer /> {/* 3. Place the Footer right here! */}
+      <Footer />
     </Router>
   );
 }
