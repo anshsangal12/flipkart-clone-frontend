@@ -35,12 +35,14 @@ function Cart() {
       .catch(err => console.error("Update failed", err));
   };
 
-  const removeItem = (id) => {
+ const removeItem = (id) => {
     axios.delete(`https://flipkart-clone-backend-sm1d.onrender.com/api/cart/${id}`)
-      .then(() => {
-        toast.success('Item removed!');
-        // Force the state to filter out the item immediately
-        setCartItems(prev => prev.filter(item => item.id !== id));
+      .then(() => { 
+        toast.success('Item removed!'); 
+        // This will reload the page, forcing the Navbar to fetch the new cart count
+        setTimeout(() => {
+          window.location.reload();
+        }, 800); 
       })
       .catch(err => console.error("Delete failed", err));
   };
