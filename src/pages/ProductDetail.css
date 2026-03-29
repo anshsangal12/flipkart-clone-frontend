@@ -214,22 +214,43 @@ hr {
   font-size: 14px;
 }
 
-.btn-wishlist {
-  padding: 18px 30px;
-  background-color: #fff;
-  color: #878787;
-  border: 1px solid #e0e0e0;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px; /* Pushes it below the other buttons on mobile */
-  margin-left: 10px; /* Spaces it from Buy Now on desktop */
-  border-radius: 2px;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
-  transition: box-shadow 0.2s;
+/* Ensure the image container can hold the absolute button */
+.main-img-container {
+  position: relative;
 }
 
-.btn-wishlist:hover {
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.3);
-  color: #ff4343; /* Gives the text a nice red tint on hover! */
+/* The authentic circular button */
+.btn-wishlist-circle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.btn-wishlist-circle:hover {
+  transform: scale(1.05);
+}
+
+/* The Heart SVG Icon */
+.btn-wishlist-circle .heart-icon {
+  stroke: #c2c2c2; /* Grey outline */
+  fill: transparent;
+  transition: all 0.2s ease;
+}
+
+/* Fills in with red when you hover! */
+.btn-wishlist-circle:hover .heart-icon {
+  stroke: #ff4343;
+  fill: #ff4343;
 }

@@ -8,7 +8,6 @@ function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  // 1. Create a dedicated function to fetch the count
   const fetchCartCount = () => {
     axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/cart')
       .then(res => setCartCount(res.data.length))
@@ -16,13 +15,8 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // 2. Fetch on initial load
     fetchCartCount();
-
-    // 3. Listen for the custom "cartUpdated" signal
     window.addEventListener('cartUpdated', fetchCartCount);
-
-    // 4. Cleanup the listener when component unmounts
     return () => {
       window.removeEventListener('cartUpdated', fetchCartCount);
     };
@@ -51,6 +45,10 @@ function Navbar() {
         <button type="submit">🔍</button>
       </form>
       <div className="navbar-right">
+        {/* 🚨 NEW: Added the Wishlist link here */}
+        <Link to="/wishlist" className="cart-link" style={{ marginRight: '25px' }}>
+          ❤️ Wishlist
+        </Link>
         <Link to="/cart" className="cart-link">
           🛒 Cart {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
         </Link>

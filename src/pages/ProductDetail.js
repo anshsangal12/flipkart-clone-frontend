@@ -60,10 +60,8 @@ function ProductDetail() {
     images = ['https://placehold.co/400x400/png?text=No+Image'];
   }
 
-  // Carousel Functions
   const nextImg = () => setSelectedImg((prev) => (prev + 1) % images.length);
   const prevImg = () => setSelectedImg((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-
   const discount = Math.round((1 - product.price / product.original_price) * 100);
 
   return (
@@ -73,6 +71,14 @@ function ProductDetail() {
         <div className="detail-left">
           {/* CAROUSEL MAIN IMAGE */}
           <div className="main-img-container">
+            
+            {/* 🚨 NEW: Floating Circular Wishlist Button */}
+            <div className="btn-wishlist-circle" onClick={addToWishlist}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="heart-icon">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </div>
+
             {images.length > 1 && (
               <button className="carousel-btn left" onClick={prevImg}>&#10094;</button>
             )}
@@ -106,8 +112,7 @@ function ProductDetail() {
           <div className="detail-actions">
             <button className="btn-cart" onClick={addToCart}>🛒 Add to Cart</button>
             <button className="btn-buy" onClick={buyNow}>⚡ Buy Now</button>
-            {/* WISHLIST BUTTON PLACED CORRECTLY HERE */}
-            <button className="btn-wishlist" onClick={addToWishlist}>❤️ WISHLIST</button>
+            {/* Note: The old big Wishlist button was removed from here! */}
           </div>
         </div>
 
