@@ -18,14 +18,13 @@ function ProductList() {
     
     axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/products', { params })
       .then(res => {
-        console.log("🔍 DATABASE PAYLOAD:", res.data); // Let's see exactly what arrives!
         setProducts(res.data);
       })
       .catch(err => console.error("Error fetching products:", err));
   }, [search, category]);
 
   const getImageUrl = (imageField) => {
-    const fallback = 'https://placehold.co/200x200/png?text=No+Image'; // Using a more reliable fallback
+    const fallback = 'https://placehold.co/200x200/png?text=No+Image';
     if (!imageField) return fallback;
     
     if (Array.isArray(imageField) && imageField.length > 0) return imageField[0];
@@ -60,7 +59,6 @@ function ProductList() {
 
       <div className="product-grid">
         {products.map(product => {
-          // Safety check in case the database rows are empty/corrupted
           if (!product || !product.name) return null; 
 
           return (

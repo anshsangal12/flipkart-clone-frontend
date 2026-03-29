@@ -16,7 +16,6 @@ function Cart() {
   useEffect(() => { fetchCart(); }, []);
 
   const updateQty = (id, quantity) => {
-    // Prevent quantity from going below 1
     if (quantity < 1) {
       removeItem(id);
       return;
@@ -24,10 +23,7 @@ function Cart() {
 
     axios.put(`https://flipkart-clone-backend-sm1d.onrender.com/api/cart/${id}`, { quantity })
       .then(() => {
-        // Option A: Re-fetch from server
         fetchCart(); 
-        
-        // Option B (Better UI): Update state locally immediately
         setCartItems(prev => prev.map(item => 
           item.id === id ? { ...item, quantity: quantity } : item
         ));
@@ -35,14 +31,16 @@ function Cart() {
       .catch(err => console.error("Update failed", err));
   };
 
- const removeItem = (id) => {
+  const removeItem = (id) => {
     axios.delete(`https://flipkart-clone-backend-sm1d.onrender.com/api/cart/${id}`)
       .then(() => { 
         toast.success('Item removed!'); 
-        // This will reload the page, forcing the Navbar to fetch the new cart count
-        setTimeout(() => {
-          window.location.reload();
-        }, 800); 
+        
+        // Remove item from UI instantly
+        setCartItems(prev => prev.filter(item => item.id !== id));
+        
+        // Broadcast signal to Navbar
+        window.dispatchEvent(new Event('cartUpdated')); 
       })
       .catch(err => console.error("Delete failed", err));
   };

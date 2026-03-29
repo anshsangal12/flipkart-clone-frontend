@@ -8,10 +8,24 @@ function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  // 1. Create a dedicated function to fetch the count
+  const fetchCartCount = () => {
     axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/cart')
       .then(res => setCartCount(res.data.length))
       .catch(() => {});
+  };
+
+  useEffect(() => {
+    // 2. Fetch on initial load
+    fetchCartCount();
+
+    // 3. Listen for the custom "cartUpdated" signal
+    window.addEventListener('cartUpdated', fetchCartCount);
+
+    // 4. Cleanup the listener when component unmounts
+    return () => {
+      window.removeEventListener('cartUpdated', fetchCartCount);
+    };
   }, []);
 
   const handleSearch = (e) => {

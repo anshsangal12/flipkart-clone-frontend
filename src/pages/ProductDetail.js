@@ -17,12 +17,20 @@ function ProductDetail() {
 
   const addToCart = () => {
     axios.post('https://flipkart-clone-backend-sm1d.onrender.com/api/cart', { product_id: product.id })
-      .then(() => toast.success('Added to cart!'));
+      .then(() => {
+        toast.success('Added to cart!');
+        // Broadcast signal to Navbar
+        window.dispatchEvent(new Event('cartUpdated')); 
+      });
   };
 
   const buyNow = () => {
     axios.post('https://flipkart-clone-backend-sm1d.onrender.com/api/cart', { product_id: product.id })
-      .then(() => navigate('/cart'));
+      .then(() => {
+        // Broadcast signal to Navbar
+        window.dispatchEvent(new Event('cartUpdated')); 
+        navigate('/cart');
+      });
   };
 
   if (!product) return <div className="loading">Loading...</div>;
