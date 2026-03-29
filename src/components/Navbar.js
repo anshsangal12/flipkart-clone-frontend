@@ -31,72 +31,44 @@ function Navbar() {
   };
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="nav-container">
+    <nav className="navbar">
+      <div className="nav-container">
 
-          {/* 🔹 TOP ROW */}
-          <div className="nav-container-top">
-
-            <Link to="/" className="navbar-logo">
-              <span className="logo-text">Flipkart</span>
-              <div className="logo-sub">
-                Explore <span className="plus">Plus</span>
-              </div>
-            </Link>
-
-            <div className="navbar-right">
-              <Link to="/wishlist" className="nav-link">
-                ❤️ Wishlist
-              </Link>
-
-              <Link to="/cart" className="nav-link">
-                🛒 Cart
-                {cartCount > 0 && (
-                  <span className="cart-badge">{cartCount}</span>
-                )}
-              </Link>
-            </div>
-
+        {/* LEFT */}
+        <Link to="/" className="navbar-logo">
+          <span className="logo-text">Flipkart</span>
+          <div className="logo-sub">
+            Explore <span className="plus">Plus</span>
           </div>
+        </Link>
 
-          {/* 🔹 SEARCH */}
-          <form className="navbar-search" onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder="Search for products, brands and more"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button type="submit">🔍</button>
-          </form>
+        {/* CENTER */}
+        <form className="navbar-search" onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search for products, brands and more"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button type="submit">🔍</button>
+        </form>
 
+        {/* RIGHT */}
+        <div className="navbar-right">
+          <Link to="/wishlist" className="nav-link">
+            ❤️ Wishlist
+          </Link>
+
+          <Link to="/cart" className="nav-link">
+            🛒 Cart
+            {cartCount > 0 && (
+              <span className="cart-badge">{cartCount}</span>
+            )}
+          </Link>
         </div>
-      </nav>
 
-      {/* 🔥 MOBILE BOTTOM NAV */}
-      <div className="bottom-nav">
-        <Link to="/">
-          <span>🏠</span>
-          Home
-        </Link>
-
-        <Link to="/wishlist">
-          <span>❤️</span>
-          Wishlist
-        </Link>
-
-        <Link to="/cart">
-          <span>🛒</span>
-          Cart
-        </Link>
-
-        <Link to="/account">
-          <span>👤</span>
-          Account
-        </Link>
       </div>
-    </>
+    </nav>
   );
 }
 
