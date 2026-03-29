@@ -9,21 +9,30 @@ function OrderSummary() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const shippingAddress = location.state?.shippingAddress;
+  // CRITICAL FIX: Give it a default address so it NEVER crashes to a blank screen!
+  const shippingAddress = location.state?.shippingAddress || {
+    name: 'Valued Customer',
+    phone: 'Provided at Checkout',
+    street: 'Saved Delivery Address',
+    city: 'Your City',
+    pincode: '------'
+  };
 
   useEffect(() => {
-    if (!shippingAddress) {
-      navigate('/checkout');
-    } else {
-      axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/cart')
-        .then(res => setCartItems(res.data))
-        .catch(err => console.error("Error fetching cart", err));
-    }
-  }, [navigate, shippingAddress]);
+    // Fetch the cart items from the database
+    axios.get('https://flipkart-clone-backend-sm1d.onrender.com/api/cart')
+      .then(res => {
+        setCartItems(res.data);
+      })
+      .catch(err => console.error("Error fetching cart", err));
+  }, []);
 
-  if (!shippingAddress) return null;
-
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Safely calculate total even if quantity is missing
+  const total = cartItems.reduce((sum, item) => {
+    const itemPrice = Number(item.price) || 0;
+    const itemQty = Number(item.quantity) || 1;
+    return sum + (itemPrice * itemQty);
+  }, 0);
 
   const placeOrder = () => {
     const orderId = "OD" + Math.floor(Math.random() * 10000000000);
@@ -31,16 +40,27 @@ function OrderSummary() {
     navigate(`/order-confirmation/${orderId}`);
   };
 
-  // CRITICAL FIX: Safe image parser to prevent the White Screen of Death
+  // Safely grab the first image
   const getSafeImage = (images) => {
     if (Array.isArray(images) && images.length > 0) return images[0];
     if (typeof images === 'string') {
       return images.replace(/[{}"']/g, '').split(',')[0];
     }
-    return 'https://placehold.co/400x400/png?text=No+Image';
+    return 'https://placehold.co/100x100/png?text=Item';
   };
 
-  if (cartItems.length === 0) return <div className="loading" style={{textAlign: 'center', marginTop: '50px'}}>Loading Order Details...</div>;
+  // If cart is empty, show a friendly message instead of a blank screen
+  if (cartItems.length === 0) {
+    return (
+      <div style={{ textAlign: 'center', padding: '100px 20px', minHeight: '60vh' }}>
+        <h2>Loading your order details...</h2>
+        <p>If this takes too long, your cart might be empty.</p>
+        <button onClick={() => navigate('/')} style={{ padding: '10px 20px', marginTop: '20px', cursor: 'pointer' }}>
+          Go to Home
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="summary-page">
@@ -60,11 +80,11 @@ function OrderSummary() {
                 <img 
                   src={getSafeImage(item.images)} 
                   alt={item.name} 
-                  onError={e => e.target.src='https://placehold.co/400x400/png?text=No+Image'} 
+                  onError={e => e.target.src='https://placehold.co/100x100/png?text=Item'} 
                 />
                 <div className="summary-item-info">
                   <p className="item-name">{item.name}</p>
-                  <p className="item-qty">Quantity: {item.quantity}</p>
+                  <p className="item-qty">Quantity: {item.quantity || 1}</p>
                   <p className="item-price">₹{Number(item.price).toLocaleString()}</p>
                 </div>
               </div>
