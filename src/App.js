@@ -10,6 +10,7 @@ import ProductList from './pages/ProductList';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import OrderSummary from './pages/OrderSummary';
 import OrderConfirmation from './pages/OrderConfirmation';
 
 function App() {
