@@ -1,37 +1,79 @@
 .navbar {
   background-color: #2874f0;
   color: white;
-  padding: 10px 15px;
-  display: flex;
-  flex-direction: column; /* Row stacking for mobile */
-  gap: 8px;
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
 }
 
-.nav-top-row {
+/* ================= MAIN CONTAINER ================= */
+.nav-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  padding: 10px 16px;
+  max-width: 1400px;
+  margin: auto;
+  gap: 15px;
 }
 
+/* ================= LEFT (LOGO) ================= */
 .navbar-logo {
   text-decoration: none;
   color: white;
   line-height: 1;
 }
 
-.logo-text { font-size: 18px; font-weight: bold; font-style: italic; }
-.logo-sub { font-size: 10px; font-style: italic; }
-.plus { color: #ffe500; font-weight: bold; }
+.logo-text {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
 
+.logo-sub {
+  font-size: 11px;
+  font-style: italic;
+}
+
+.plus {
+  color: #ffe500;
+  font-weight: bold;
+}
+
+/* ================= CENTER (SEARCH) ================= */
+.navbar-search {
+  flex: 1;
+  display: flex;
+  max-width: 600px;
+  background: white;
+  border-radius: 2px;
+  height: 38px;
+  overflow: hidden;
+}
+
+.navbar-search input {
+  flex: 1;
+  border: none;
+  padding: 0 12px;
+  outline: none;
+  font-size: 14px;
+}
+
+.navbar-search button {
+  background: white;
+  border: none;
+  padding: 0 12px;
+  color: #2874f0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ================= RIGHT (ICONS) ================= */
 .navbar-right {
   display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 20px;
 }
 
 .nav-link {
@@ -54,54 +96,26 @@
   border: 1px solid #2874f0;
 }
 
-.navbar-search {
-  width: 100%;
-  display: flex;
-  background: white;
-  border-radius: 2px;
-  height: 36px;
-  overflow: hidden;
-}
-
-.navbar-search input {
-  flex: 1;
-  border: none;
-  padding: 0 12px;
-  outline: none;
-  font-size: 14px;
-}
-
-.navbar-search button {
-  background: white;
-  border: none;
-  padding-right: 10px;
-  color: #2874f0;
-  cursor: pointer;
-}
-
-/* ============================================================
-   🖥️ DESKTOP UPGRADE (768px and wider)
-   ============================================================ */
-@media (min-width: 768px) {
-  .navbar {
-    flex-direction: row; /* Everything on one line */
-    height: 56px;
-    padding: 0 10%; /* Centers content on desktop */
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .nav-top-row {
-    width: auto;
-    gap: 30px;
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
 
   .navbar-search {
-    max-width: 500px;
-    margin: 0;
+    max-width: 100%;
   }
 
   .navbar-right {
-    margin-left: 10px;
+    justify-content: space-between;
+  }
+}
+
+/* ================= LARGE SCREENS ================= */
+@media (min-width: 1024px) {
+  .navbar-search {
+    max-width: 700px;
   }
 }
