@@ -16,13 +16,33 @@ function Cart() {
   useEffect(() => { fetchCart(); }, []);
 
   const updateQty = (id, quantity) => {
+    // Prevent quantity from going below 1
+    if (quantity < 1) {
+      removeItem(id);
+      return;
+    }
+
     axios.put(`https://flipkart-clone-backend-sm1d.onrender.com/api/cart/${id}`, { quantity })
-      .then(() => fetchCart());
+      .then(() => {
+        // Option A: Re-fetch from server
+        fetchCart(); 
+        
+        // Option B (Better UI): Update state locally immediately
+        setCartItems(prev => prev.map(item => 
+          item.id === id ? { ...item, quantity: quantity } : item
+        ));
+      })
+      .catch(err => console.error("Update failed", err));
   };
 
   const removeItem = (id) => {
     axios.delete(`https://flipkart-clone-backend-sm1d.onrender.com/api/cart/${id}`)
-      .then(() => { toast.success('Item removed!'); fetchCart(); });
+      .then(() => {
+        toast.success('Item removed!');
+        // Force the state to filter out the item immediately
+        setCartItems(prev => prev.filter(item => item.id !== id));
+      })
+      .catch(err => console.error("Delete failed", err));
   };
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
