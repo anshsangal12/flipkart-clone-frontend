@@ -119,3 +119,43 @@
     max-width: 700px;
   }
 }
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+    background-color: #2874f0; /* FIX white space issue */
+  }
+
+  /* TOP ROW: Logo + Icons */
+  .nav-container-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Move icons above search */
+  .navbar-right {
+    order: 2;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Search goes below */
+  .navbar-search {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .navbar-search input {
+    font-size: 13px;
+  }
+}

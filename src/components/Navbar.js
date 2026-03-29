@@ -27,7 +27,7 @@ function Navbar() {
     };
   }, []);
 
-  // Handle search submit
+  // Handle search
   const handleSearch = (e) => {
     e.preventDefault();
     if (search.trim() !== '') {
@@ -38,18 +38,36 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        
-        {/* LEFT: LOGO */}
-        <Link to="/" className="navbar-logo">
-          <div>
-            <span className="logo-text">Flipkart</span>
-            <div className="logo-sub">
-              Explore <span className="plus">Plus</span>
-            </div>
-          </div>
-        </Link>
 
-        {/* CENTER: SEARCH BAR */}
+        {/* 🔹 TOP ROW (Logo + Icons) */}
+        <div className="nav-container-top">
+          
+          {/* LOGO */}
+          <Link to="/" className="navbar-logo">
+            <div>
+              <span className="logo-text">Flipkart</span>
+              <div className="logo-sub">
+                Explore <span className="plus">Plus</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* RIGHT ICONS */}
+          <div className="navbar-right">
+            <Link to="/wishlist" className="nav-link">
+              ❤️ Wishlist
+            </Link>
+
+            <Link to="/cart" className="nav-link">
+              🛒 Cart
+              {cartCount > 0 && (
+                <span className="cart-badge">{cartCount}</span>
+              )}
+            </Link>
+          </div>
+        </div>
+
+        {/* 🔹 SEARCH BAR (Below on Mobile, Center on Desktop via CSS) */}
         <form className="navbar-search" onSubmit={handleSearch}>
           <input
             type="text"
@@ -59,20 +77,6 @@ function Navbar() {
           />
           <button type="submit">🔍</button>
         </form>
-
-        {/* RIGHT: NAV LINKS */}
-        <div className="navbar-right">
-          <Link to="/wishlist" className="nav-link">
-            ❤️ Wishlist
-          </Link>
-
-          <Link to="/cart" className="nav-link">
-            🛒 Cart
-            {cartCount > 0 && (
-              <span className="cart-badge">{cartCount}</span>
-            )}
-          </Link>
-        </div>
 
       </div>
     </nav>
