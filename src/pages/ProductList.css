@@ -170,3 +170,29 @@
 .price { font-weight: bold; color: #212121; }
 .original-price { color: #878787; text-decoration: line-through; font-size: 12px; }
 .discount { color: #388e3c; font-weight: 500; font-size: 12px; }
+
+.product-list-page {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.product-grid {
+  display: grid;
+  /* Auto-fill creates as many cards as possible based on screen width */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+/* iPhone XR / Small Screen Fix */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* Exactly 2 per row on phones */
+    gap: 5px;
+  }
+  .product-card {
+    padding: 10px;
+  }
+}
